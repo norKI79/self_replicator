@@ -1,13 +1,28 @@
-# Duplicate File Scanner
+# Self Copy Utility (Rust)
 
-A command-line duplicate file scanner written in Rust.
+A small Rust command-line utility that creates a unique directory and copies its own executable into that location.
+
+This project demonstrates:
+
+- Rust filesystem operations
+- Command-line argument parsing
+- Path manipulation
+- Environment inspection
+- Error handling with `Result`
+- Working with executable paths
 
 ## Features
-- Recursive directory traversal
-- SHA-256 hashing
-- Reports duplicate files
-- Cross-platform
 
-## Build
+- Automatically creates a `sandbox` directory
+- Generates unique timestamp/process-based directory names
+- Copies the running executable into the generated directory
+- Supports custom destination paths
+- Supports custom output filenames
+- Optional verbose logging
+
+## Usage
+
+Run with default settings:
+
 ```bash
-cargo build --release
+mycopy.exe

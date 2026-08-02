@@ -1,1 +1,5 @@
 /target
+/sandbox
+/.vscode
+.DS_Store
+Thumbs.db
