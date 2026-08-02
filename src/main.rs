@@ -7,6 +7,8 @@ use std::{
     time::{SystemTime, UNIX_EPOCH},
 };
 
+use sha2::{Digest, Sha256};
+
 struct Config {
     destination: PathBuf,
     filename: Option<String>,
@@ -29,6 +31,10 @@ fn main() -> io::Result<()> {
     )?;
 
     println!("Copied executable to: {}", copied_file.display());
+
+    if config.verbose {
+        verify_copy(&env::current_exe()?, &copied_file)?;
+    }
 
     Ok(())
 }
@@ -137,4 +143,33 @@ fn copy_self(
     fs::copy(&current_exe, &destination_file)?;
 
     Ok(destination_file)
+}
+
+fn calculate_sha256(path: &Path) -> io::Result<String> {
+    let data = fs::read(path)?;
+
+    let mut hasher = Sha256::new();
+    hasher.update(data);
+
+    let result = hasher.finalize();
+
+    Ok(format!("{:x}", result))
+}
+
+fn verify_copy(original: &Path, copied: &Path) -> io::Result<()> {
+    println!("\nSHA-256 Verification:");
+
+    let original_hash = calculate_sha256(original)?;
+    let copied_hash = calculate_sha256(copied)?;
+
+    println!("Original  : {}", original_hash);
+    println!("Copied    : {}", copied_hash);
+
+    if original_hash == copied_hash {
+        println!("Verification successful");
+    } else {
+        println!("Verification FAILED");
+    }
+
+    Ok(())
 }

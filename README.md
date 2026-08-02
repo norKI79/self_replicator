@@ -1,24 +1,26 @@
-# Self Copy Utility (Rust)
+# Rust Executable Copy Utility
 
-A small Rust command-line utility that creates a unique directory and copies its own executable into that location.
+A Rust command-line utility that creates a unique directory, copies the running executable into it, and optionally verifies the copied file using SHA-256 hashing.
 
 This project demonstrates:
 
 - Rust filesystem operations
 - Command-line argument parsing
-- Path manipulation
-- Environment inspection
+- Path handling with `Path` and `PathBuf`
 - Error handling with `Result`
-- Working with executable paths
+- Environment inspection
+- Cryptographic hashing
+- File integrity verification
 
 ## Features
 
-- Automatically creates a `sandbox` directory
-- Generates unique timestamp/process-based directory names
-- Copies the running executable into the generated directory
+- Creates a `sandbox` directory automatically
+- Generates unique output directories using timestamps and process IDs
+- Copies the currently running executable
 - Supports custom destination paths
 - Supports custom output filenames
-- Optional verbose logging
+- Optional verbose diagnostic output
+- SHA-256 verification of copied files
 
 ## Usage
 
